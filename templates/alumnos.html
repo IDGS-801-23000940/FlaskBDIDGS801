@@ -1,48 +1,73 @@
-{% extends "layout.html"%}
-{% block container %}
+{% extends "layout.html"%} {% import "_macros.html" as macros %} {% block
+container %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alumnos</title>
-        <link rel="stylesheet" href="{{url_for('static',filename='dist/output.css')}}">
+<div class="w-full max-w-lg h-md bg-white shadow-xl rounded-2xl p-8">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Registrar Alumno</h2>
 
-</head>
-<body>
-    <br>
-    <div class="max-w-md mx-auto">
-          <div class="relative z-0 w-full mb-5 group">
-  <div class="relative z-0 w-full mb-5 group">
-        <input type="number"  name="floating_phone" id="id" class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder="" required />
-        <label for="floating_phone" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Id</label>
+  <form class="space-y-5">
+    {{ form.csrf_token }}
+    <div>
+      <input
+        type="hidden"
+        id="csrf_token"
+        name="csrf_token"
+        value="{{ csrf_token() }}"
+      />
     </div>
-  <div class="relative z-0 w-full mb-5 group">
-       <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="floating_first_name" id="name" class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
-        <label for="name" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Nombre</label>
-    </div>
-</div>
-  <div class="relative z-0 w-full mb-5 group">
-       <div class="relative z-0 w-full mb-5 group">
-        <input type="text" name="floating_first_name" id="first_name" class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
-        <label for="first_name" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Apellido Paterno</label>
-    </div>
-</div>
 
-  <div class="relative z-0 w-full mb-5 group">
-      <input type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-heading bg-transparent border-0 border-b-2 border-default-medium appearance-none focus:outline-none focus:ring-0 focus:border-brand peer" placeholder=" " required />
-      <label for="floating_email" class="absolute text-sm text-body duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-fg-brand peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email address</label>
-  </div>
-  
-  </div>
-  <button type="submit" class="text-white bg-brand box-border border border-transparent hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-4 py-2.5 focus:outline-none">Submit</button>
-</div>
-</form>
+    {{ macros.campoNuevo(form.nombre, placeholder="Ingrese su nombre",
+    class="bg-neutral-secondary-medium border border-default-medium text-heading
+    text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3
+    py-2.5 shadow-xs placeholder:text-body")}} {{
+    macros.campoNuevo(form.apaterno, placeholder="Ingrese su Apellido Paterno",
+    class="bg-neutral-secondary-medium border border-default-medium text-heading
+    text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3
+    py-2.5 shadow-xs placeholder:text-body")}} {{ macros.campoNuevo(form.email,
+    placeholder="Ingrese su correo", class="bg-neutral-secondary-medium border
+    border-default-medium text-heading text-sm rounded-base focus:ring-brand
+    focus:border-brand block w-full px-3 py-2.5 shadow-xs
+    placeholder:text-body")}}
 
-</body>
-</html>
+    <!-- Botones -->
+    <div class="flex gap-4 pt-4">
+      <!-- Guardar -->
+      <button
+        type="submit"
+        id="btn1"
+        name="btn1"
+        value="Registrar"
+        class="flex-1 inline-flex justify-center items-center gap-2 text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-3 shadow-md transition-all duration-200"
+      >
+        <!-- Icono Guardar -->
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M17 3H5a2 2 0 0 0-2 2v14l4-4h10a2 2 0 0 0 2-2V7l-4-4Z" />
+        </svg>
+
+        Registrar
+      </button>
+
+      <!-- Cancelar -->
+      <a
+        href="index"
+        class="flex-1 inline-flex justify-center items-center gap-2 text-gray-700 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-3 transition-all duration-200"
+      >
+        <!-- Icono Cancelar -->
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M6 6l12 12M6 18L18 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+
+        Cancelar
+      </a>
+    </div>
+  </form>
+  <br />
+  <br />
+  <br />
+</div>
 
 {% endblock %}
-
