@@ -20,7 +20,7 @@ class UserForm2(Form):
     nombre = StringField('nombre',
                          [validators.DataRequired(message='El nombre es requerido'),
                           validators.length(min=4 ,max=20, message='Requiere min 4 y max 20')])
-    apaterno = StringField('nombre',
+    apaterno = StringField('apellido paterno',
                          [validators.DataRequired(message='El apellido es requerido')])
     email = EmailField('correo', [
         validators.DataRequired(message='Correo es requerido'),

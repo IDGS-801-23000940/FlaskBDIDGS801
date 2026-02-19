@@ -1,0 +1,35 @@
+{% extends "layout.html" %} {% import "_macros.html" as macros %} {% block
+container %}
+
+<div
+  class="relative max-w-xs w-full p-6 bg-neutral-primary-soft border border-default rounded-base shadow-xs"
+>
+  <!-- Perfil -->
+  <div class="flex flex-col items-center text-center">
+    <img
+      class="w-16 h-16 mb-4 rounded-full"
+      src="/static/src/images/profile.png"
+      alt="Foto de perfil"
+    />
+
+    <h2 class="text-xl font-semibold text-heading">
+      {{ nombre }} {{ apaterno }}
+    </h2>
+
+    <p class="text-sm text-body mt-1">{{ email }}</p>
+
+    <span class="text-xs text-body opacity-70">Usuario del sistema</span>
+
+    <!-- Botones -->
+    <div class="flex gap-3 mt-6">
+      <a
+        href="{{ url_for('index') }}"
+        class="inline-flex items-center px-4 py-2.5 text-sm font-medium text-white bg-brand rounded-base hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium"
+      >
+        Regresar
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
