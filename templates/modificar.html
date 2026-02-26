@@ -11,17 +11,19 @@ container %}
     <!-- ID visible (no editable) -->
     {{ macros.campoNuevo(form.id, class="bg-neutral-secondary-medium border
     border-default-medium text-heading text-sm rounded-base block w-full px-3
-    py-2.5 shadow-xs", disabled="true")}}
-
-    {{ macros.campoNuevo(form.nombre, placeholder="Ingrese su nombre",
-    class="bg-neutral-secondary-medium border border-default-medium text-heading
-    text-sm rounded-base block w-full px-3 py-2.5 shadow-xs")}} {{
-    macros.campoNuevo(form.apaterno, placeholder="Ingrese su Apellido Paterno",
-    class="bg-neutral-secondary-medium border border-default-medium text-heading
-    text-sm rounded-base block w-full px-3 py-2.5 shadow-xs")}} {{
-    macros.campoNuevo(form.email, placeholder="Ingrese su correo",
-    class="bg-neutral-secondary-medium border border-default-medium text-heading
-    text-sm rounded-base block w-full px-3 py-2.5 shadow-xs")}}
+    py-2.5 shadow-xs", disabled="true")}} {{ macros.campoNuevo(form.nombre,
+    placeholder="Ingrese su nombre", class="bg-neutral-secondary-medium border
+    border-default-medium text-heading text-sm rounded-base block w-full px-3
+    py-2.5 shadow-xs")}} {{ macros.campoNuevo(form.apellidos,
+    placeholder="Ingresen sus apellidos", class="bg-neutral-secondary-medium
+    border border-default-medium text-heading text-sm rounded-base block w-full
+    px-3 py-2.5 shadow-xs")}} {{ macros.campoNuevo(form.email,
+    placeholder="Ingrese su correo", class="bg-neutral-secondary-medium border
+    border-default-medium text-heading text-sm rounded-base block w-full px-3
+    py-2.5 shadow-xs")}} {{ macros.campoNuevo(form.telefono,
+    placeholder="Ingrese su teléfono", class="bg-neutral-secondary-medium border
+    border-default-medium text-heading text-sm rounded-base block w-full px-3
+    py-2.5 shadow-xs")}}
 
     <!-- Botones -->
     <div class="flex gap-4 pt-4">
