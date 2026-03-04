@@ -1,116 +1,30 @@
-from flask import Flask, redirect, render_template, request, url_for
-from flask import flash
+from flask import Flask, redirect, render_template, url_for
 from flask_wtf.csrf import CSRFProtect
-from flask import g
-import forms
 from config import DevelopmentConfig
-from models import db, Alumnos
+from models import db
 from flask_migrate import Migrate
+
+from maestros.routes import maestros
+from alumnos.routes import alumnos   # IMPORTAR BLUEPRINT
 
 app = Flask(__name__)
 
 app.config.from_object(DevelopmentConfig)
+
+# Registrar blueprints
+app.register_blueprint(maestros)
+app.register_blueprint(alumnos)
+
 db.init_app(app)
+
 csrf = CSRFProtect()
 migrate = Migrate(app, db)
 
+
+# Ruta principal
 @app.route("/")
-@app.route("/index")
-def index():
-    create_form = forms.UserForm(request.form)
-    # ORM SELECT * FROM alumnos;
-    alumnos = Alumnos.query.all()
-    return render_template("index.html", form=create_form, alumnos=alumnos)
-
-
-@app.route("/alumnos", methods=["GET", "POST"])
-def alumnos():
-    create_form = forms.UserForm2(request.form)
-    if request.method == "POST":
-        alumno = Alumnos(
-            nombre=create_form.nombre.data,
-            apellidos=create_form.apellidos.data,
-            email=create_form.email.data,
-            telefono = create_form.telefono.data
-        )
-        db.session.add(alumno)
-        db.session.commit()
-        return redirect(url_for("index"))
-
-    return render_template("alumnos.html", form=create_form)
-
-@app.route('/detalles', methods=['GET', 'POST'])
-def detalles():
-    create_form = forms.UserForm2(request.form)
-    if request.method == 'GET':
-        id = request.args.get('id')
-        #select * from alumnos where id == id
-        alum1 = db.session.query(Alumnos).filter(Alumnos.id==id).first()
-        nombre = alum1.nombre
-        apellidos = alum1.apellidos
-        email = alum1.email
-        telefono = alum1.telefono
-        
-    return render_template('detalles.html', id=id, nombre=nombre, apellidos=apellidos, email=email, telefono= telefono)
-
-
-@app.route("/modificar", methods=['GET', 'POST'])
-def modificar():
-    form = forms.UserForm2()
-
-    # GET → cargar datos
-    if request.method == 'GET':
-        id = request.args.get('id')
-        alumno = Alumnos.query.get(id)
-
-        if alumno:
-            form.id.data = alumno.id
-            form.nombre.data = alumno.nombre
-            form.apellidos.data = alumno.apellidos
-            form.email.data = alumno.email
-            form.telefono.data = alumno.telefono
-
-    # POST → actualizar
-    if form.validate_on_submit():
-        id = form.id.data
-        alumno = Alumnos.query.get(id)
-
-        if alumno:
-            alumno.nombre = form.nombre.data.strip()
-            alumno.apellidos = form.apellidos.data
-            alumno.email = form.email.data
-            alumno.telefono = form.telefono.data
-            db.session.commit()
-
-        return redirect(url_for('index'))
-
-    return render_template('modificar.html', form=form)
-
-@app.route('/eliminar', methods=['GET','POST'])
-def eliminar():
-    create_form = forms.UserForm2(request.form)
-    if request.method == 'GET':
-        id =request.args.get('id')
-        alum1 = db.session.query(Alumnos).filter(Alumnos.id== id).first()
-        if alum1:
-            create_form.id.data = alum1.id
-            create_form.nombre.data = alum1.nombre
-            create_form.apellidos.data = alum1.apellidos
-            create_form.email.data = alum1.email
-            create_form.telefono.data = alum1.telefono
-            return render_template('eliminar.html', form = create_form)
-        
-    if request.method =='POST':
-        id = create_form.id.data
-        alum = db.session.query(Alumnos).filter(Alumnos.id == id).first()
-        if alum:
-            db.session.delete(alum)
-            db.session.commit()
-        return redirect(url_for('index'))
-    
-    return render_template("eliminar.html",  form= create_form)
-
-
+def home():
+    return redirect(url_for("alumnos.index"))
 
 
 @app.errorhandler(404)
@@ -119,8 +33,10 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
+
     csrf.init_app(app)
 
     with app.app_context():
         db.create_all()
+
     app.run()

@@ -1,0 +1,79 @@
+{% extends "layout.html"%} {% import "_macros.html" as macros %} {% block
+container %}
+
+<div class="w-full max-w-lg bg-white shadow-xl rounded-2xl p-8 mb-28">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Eliminar Maestro</h2>
+
+  <form method="POST" class="space-y-5 pb-20">
+    {{ form.csrf_token }}
+    <input type="hidden" name="matricula" value="{{ form.matricula.data }}" />
+
+    {{ macros.campoNuevo( form.matricula, class="bg-neutral-secondary-medium
+    border border-default-medium text-heading text-sm rounded-base
+    focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs
+    placeholder:text-body", disabled="true" )}} {{ macros.campoNuevo(
+    form.nombre, placeholder="Ingrese su nombre",
+    class="bg-neutral-secondary-medium border border-default-medium text-heading
+    text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3
+    py-2.5 shadow-xs placeholder:text-body", readonly="true" )}} {{
+    macros.campoNuevo( form.apellidos, placeholder="Ingrese sus apellidos",
+    class="bg-neutral-secondary-medium border border-default-medium text-heading
+    text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3
+    py-2.5 shadow-xs placeholder:text-body", readonly="true" )}} {{
+    macros.campoNuevo( form.especialidad, placeholder="Especialidad",
+    class="bg-neutral-secondary-medium border border-default-medium text-heading
+    text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3
+    py-2.5 shadow-xs placeholder:text-body", readonly="true" )}} {{
+    macros.campoNuevo( form.email, placeholder="Correo",
+    class="bg-neutral-secondary-medium border border-default-medium text-heading
+    text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3
+    py-2.5 shadow-xs placeholder:text-body", readonly="true" )}}
+
+    <!-- BOTONES -->
+    <div class="flex gap-4 pt-6">
+      <!-- ELIMINAR -->
+      <button
+        type="submit"
+        id="btn1"
+        name="btn1"
+        value="Eliminar"
+        class="flex-1 inline-flex justify-center items-center gap-2 text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-semibold rounded-xl text-sm px-5 py-3 shadow-lg transition"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M3 6h18M8 6V4h8v2m-1 0v14a2 2 0 01-2 2H9a2 2 0 01-2-2V6h10z"
+          />
+        </svg>
+
+        Eliminar Maestro
+      </button>
+
+      <!-- CANCELAR -->
+      <a
+        href="{{ url_for('maestros.listado_maestros') }}"
+        class="flex-1 inline-flex justify-center items-center gap-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-xl text-sm px-5 py-3 transition"
+      >
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M6 6l12 12M6 18L18 6"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+          />
+        </svg>
+
+        Cancelar
+      </a>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

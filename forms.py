@@ -27,3 +27,18 @@ class UserForm2(FlaskForm):
     ])
     telefono = StringField('telefono',
                          [validators.DataRequired(message='El apellido es requerido')])
+
+
+class TeacherForm(FlaskForm):
+    matricula=IntegerField('matricula')
+    nombre = StringField('nombre',
+                         [validators.DataRequired(message='El nombre es requerido'),
+                          validators.length(min=4 ,max=20, message='Requiere min 4 y max 20')])
+    apellidos = StringField('apellidos',
+                         [validators.DataRequired(message='El apellido es requerido')])
+    especialidad = StringField('especialidad',
+                         [validators.DataRequired(message='La especialidad es requerida')])
+    email = EmailField('correo', [
+        validators.DataRequired(message='Correo es requerido'),
+        validators.Email(message='Ingrese un correo valido')
+    ])
