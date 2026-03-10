@@ -1,0 +1,58 @@
+{% extends "layout.html" %} 
+{% block container %}
+
+<section class="bg-neutral-primary py-8">
+  <div class="max-w-2xl mx-auto px-4">
+    <h2 class="mb-4 text-xl font-bold text-gray-900">Modificar Curso</h2>
+
+    <form action="{{ url_for('cursos.modificarCurso') }}" method="POST">
+      <input type="hidden" name="id" value="{{ form.id.data }}" />
+
+      {{ form.csrf_token if form.csrf_token }}
+
+      <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+        <div class="sm:col-span-2">
+          <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900">Nombre del Curso</label>
+          {{ form.nombre(class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5") }} 
+          {% if form.nombre.errors %}
+          <span class="text-sm text-red-600">{{ form.nombre.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="maestro_id" class="block mb-2 text-sm font-medium text-gray-900">Maestro a cargo</label>
+          <select name="maestro_id" id="maestro_id" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5">
+            <option value="" disabled>Selecciona un maestro de la lista...</option>
+            
+            {% for maestro in maestros %}
+            <option value="{{ maestro.matricula }}" {% if form.maestro_id.data|string == maestro.matricula|string %} selected {% endif %}>
+              {{ maestro.nombre }} {{ maestro.apellidos }} (Matrícula: {{ maestro.matricula }})
+            </option>
+            {% endfor %}
+            
+          </select>
+          <p class="mt-1 text-xs text-gray-500">Puedes reasignar este curso a otro maestro si lo deseas.</p>
+          {% if form.maestro_id.errors %}
+          <span class="text-sm text-red-600">{{ form.maestro_id.errors[0] }}</span>
+          {% endif %}
+        </div>
+
+        <div class="sm:col-span-2">
+          <label for="descripcion" class="block mb-2 text-sm font-medium text-gray-900">Descripción del Curso</label>
+          {{ form.descripcion(rows="4", class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-amber-500 focus:border-amber-500") }}
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 mt-6">
+        <button type="submit" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-black bg-amber-600 rounded-lg focus:ring-4 focus:ring-amber-200 hover:bg-amber-700">
+          Actualizar Curso
+        </button>
+        <a href="{{ url_for('cursos.listado_cursos') }}" class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-200">
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "layout.html" %} {% block container %}
+
+<section class="bg-neutral-primary py-8">
+  <div class="px-4 mx-auto max-w-screen-xl lg:px-1">
+    <div
+      class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4"
+    >
+      <h2 class="text-2xl font-bold text-gray-900">
+        Listado de Cursos y sus Inscripciones
+      </h2>
+      <a
+        href="{{ url_for('inscripciones.agregar') }}"
+        class="inline-flex items-center gap-2 text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-300 shadow-md font-medium rounded-lg text-sm px-6 py-2.5 transition-all duration-200"
+      >
+        <svg
+          class="w-5 h-5"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+            clip-rule="evenodd"
+          ></path>
+        </svg>
+        Inscribir Alumno
+      </a>
+    </div>
+
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {% for cur in cursos %}
+      <div
+        class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden flex flex-col justify-between"
+      >
+        <div class="bg-gray-50 px-4 py-3 border-b border-gray-200">
+          <h3 class="text-lg font-semibold text-gray-800">{{ cur.nombre }}</h3>
+          <p class="text-xs text-gray-500 mt-1">
+            <strong>ID Curso:</strong> {{ cur.id }} |
+            <strong>Maestro:</strong> {{ cur.maestro.nombre }} {{
+            cur.maestro.apellidos }}
+          </p>
+        </div>
+
+        <div class="p-4 flex-grow flex flex-col justify-center items-center">
+          <div class="text-4xl font-bold text-emerald-600 mb-1">
+            {{ cur.alumnos|length }}
+          </div>
+          <p class="text-sm text-gray-500 font-medium mb-4">
+            {% if cur.alumnos|length == 1 %} Alumno inscrito {% else %} Alumnos
+            inscritos {% endif %}
+          </p>
+
+          <a
+            href="{{ url_for('inscripciones.detalles', id=cur.id) }}"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition-all duration-200 w-full justify-center border border-blue-200"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M12 5c-7 0-10 7-10 7s3 7 10 7 10-7 10-7-3-7-10-7Zm0 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8Z"
+              />
+            </svg>
+            Ver Lista de Alumnos
+          </a>
+        </div>
+      </div>
+
+      {% else %}
+      <div
+        class="col-span-full bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center"
+      ></div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+{% extends "layout.html" %} {% block container %}
+
+<link
+  href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css"
+  rel="stylesheet"
+/>
+
+<section class="bg-neutral-primary py-8">
+  <div class="max-w-xl mx-auto px-4">
+    <h2 class="mb-4 text-xl font-bold text-gray-900">
+      Inscribir Alumno a Curso
+    </h2>
+
+    <form
+      action="{{ url_for('inscripciones.agregar') }}"
+      method="POST"
+      class="bg-white p-6 rounded-lg shadow-sm border border-gray-200"
+    >
+      {{ form.csrf_token if form.csrf_token }}
+
+      <div class="grid gap-6 mb-6 pb-8">
+        <div>
+          <label
+            for="alumno_id"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Buscar y Seleccionar Alumno</label
+          >
+          <select
+            id="alumno_id"
+            name="alumno_id"
+            placeholder="Escribe el nombre del alumno..."
+            autocomplete="off"
+            required
+          >
+            <option value="">Escribe o selecciona un alumno...</option>
+            {% for alumno in alumnos %}
+            <option value="{{ alumno.id }}">
+              {{ alumno.nombre }} {{ alumno.apellidos }} (ID: {{ alumno.id }})
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div>
+          <label
+            for="curso_id"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Seleccionar Curso</label
+          >
+          <select
+            name="curso_id"
+            id="curso_id"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5"
+            required
+          >
+            <option value="" disabled selected>Selecciona un curso...</option>
+            {% for curso in cursos %}
+            <option value="{{ curso.id }}">{{ curso.nombre }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 mt-4">
+        <button
+          type="submit"
+          class="text-black bg-emerald-700 hover:bg-emerald-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        >
+          Inscribir
+        </button>
+        <a
+          href="{{ url_for('inscripciones.listado_inscripciones') }}"
+          class="text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        >
+          Cancelar
+        </a>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    new TomSelect("#alumno_id", {
+      create: false,
+      sortField: {
+        field: "text",
+        direction: "asc",
+      },
+    });
+  });
+</script>
+
+{% endblock %}

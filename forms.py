@@ -1,4 +1,4 @@
-from wtforms import Form, StringField
+from wtforms import Form, StringField, TextAreaField
 from wtforms import EmailField
 from wtforms import validators
 from wtforms import IntegerField, PasswordField, FloatField
@@ -42,3 +42,15 @@ class TeacherForm(FlaskForm):
         validators.DataRequired(message='Correo es requerido'),
         validators.Email(message='Ingrese un correo valido')
     ])
+
+
+class CursoForm(Form):
+    id = IntegerField('ID')
+    nombre = StringField('Nombre', [validators.DataRequired(message="El nombre es requerido")])
+    descripcion = TextAreaField('Descripción')
+    maestro_id = IntegerField('Matrícula del Maestro', [validators.DataRequired(message="La matrícula del maestro es requerida")])
+
+
+class InscripcionForm(Form):
+    alumno_id = IntegerField('ID del Alumno', [validators.DataRequired(message="El ID del alumno es requerido")])
+    curso_id = IntegerField('ID del Curso', [validators.DataRequired(message="El ID del curso es requerido")])

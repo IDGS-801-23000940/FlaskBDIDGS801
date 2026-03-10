@@ -4,14 +4,14 @@ from flask import redirect, render_template, request, url_for
 from models import Alumnos, db
 
 
-@alumnos.route("/index")
-def index():
+@alumnos.route("/listadoAlumnos", methods=["GET"])
+def listado_alumnos():
     create_form = forms.UserForm(request.form)
 
     alumnos_lista = Alumnos.query.all()
 
     return render_template(
-        "alumnos/index.html",
+        "alumnos/listadoAlumnos.html",
         form=create_form,
         alumnos=alumnos_lista
     )
@@ -34,25 +34,23 @@ def agregar_alumno():
         db.session.add(alumno)
         db.session.commit()
 
-        return redirect(url_for("alumnos.index"))
+        return redirect(url_for("alumnos.listado_alumnos"))
 
     return render_template("alumnos/alumnos.html", form=create_form)
 
 
 @alumnos.route('/detalles')
 def detalles():
-
     id = request.args.get('id')
-
+    # Obtenemos el objeto completo para acceder a sus relaciones
     alumno = Alumnos.query.get(id)
+    
+    if not alumno:
+        return redirect(url_for('alumnos.listado_alumnos'))
 
     return render_template(
         "alumnos/detalles.html",
-        id=alumno.id,
-        nombre=alumno.nombre,
-        apellidos=alumno.apellidos,
-        email=alumno.email,
-        telefono=alumno.telefono
+        alumno=alumno  # Pasamos el objeto completo
     )
 
 
@@ -88,7 +86,7 @@ def modificar():
 
             db.session.commit()
 
-        return redirect(url_for("alumnos.index"))
+        return redirect(url_for("alumnos.listado_alumnos"))
 
     return render_template("alumnos/modificar.html", form=form)
 
@@ -121,6 +119,6 @@ def eliminar():
             db.session.delete(alumno)
             db.session.commit()
 
-        return redirect(url_for("alumnos.index"))
+        return redirect(url_for("alumnos.listado_alumnos"))
 
     return render_template("alumnos/eliminar.html", form=create_form)

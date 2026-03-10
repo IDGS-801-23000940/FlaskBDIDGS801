@@ -35,7 +35,7 @@ container %}
         id="btn1"
         name="btn1"
         value="Registrar"
-        class="flex-1 inline-flex justify-center items-center gap-2 text-white bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-3 shadow-md transition-all duration-200"
+        class="flex-1 inline-flex justify-center items-center gap-2 text-black bg-emerald-600 hover:bg-emerald-700 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-3 shadow-md transition-all duration-200"
       >
         <!-- Icono Guardar -->
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -47,7 +47,7 @@ container %}
 
       <!-- Cancelar -->
       <a
-        href="index"
+        href="{{ url_for('maestros.listado_maestros') }}"
         class="flex-1 inline-flex justify-center items-center gap-2 text-gray-700 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-3 transition-all duration-200"
       >
         <!-- Icono Cancelar -->

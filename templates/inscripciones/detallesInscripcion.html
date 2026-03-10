@@ -1,0 +1,97 @@
+{% extends "layout.html" %} {% block container %}
+
+<section class="bg-neutral-primary py-8">
+  <div class="max-w-4xl mx-auto px-4">
+    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200 mb-6">
+      <div class="flex justify-between items-start">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-2">
+            Detalles del Curso: {{ curso.nombre }}
+          </h2>
+          <p class="text-sm text-gray-600">
+            <strong>ID del Curso:</strong> {{ curso.id }}
+          </p>
+          <p class="text-sm text-gray-600">
+            <strong>Maestro Asignado:</strong> {{ curso.maestro.nombre }} {{
+            curso.maestro.apellidos }} (Matrícula: {{ curso.maestro_id }})
+          </p>
+        </div>
+        <div
+          class="bg-emerald-50 text-emerald-700 px-4 py-2 rounded-lg border border-emerald-200 text-center"
+        >
+          <span class="block text-2xl font-bold"
+            >{{ curso.alumnos|length }}</span
+          >
+          <span class="text-xs uppercase font-semibold">Inscritos</span>
+        </div>
+      </div>
+
+      <div class="mt-4 pt-4 border-t border-gray-100">
+        <h3 class="text-sm font-medium text-gray-500 mb-1">Descripción:</h3>
+        <p class="text-sm text-gray-800">
+          {{ curso.descripcion if curso.descripcion else "Sin descripción." }}
+        </p>
+      </div>
+    </div>
+
+    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+      <svg
+        class="w-5 h-5 text-gray-500"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z"
+        ></path>
+      </svg>
+      Lista de Alumnos Inscritos
+    </h3>
+
+    <div
+      class="relative overflow-x-auto bg-white shadow-xs rounded-base border border-default"
+    >
+      <table class="w-full text-sm text-left rtl:text-right text-body">
+        <thead class="bg-gray-50 border-b border-default text-gray-700">
+          <tr>
+            <th scope="col" class="px-6 py-3 font-medium">ID</th>
+            <th scope="col" class="px-6 py-3 font-medium">Nombre Completo</th>
+            <th scope="col" class="px-6 py-3 font-medium">Email</th>
+            <th scope="col" class="px-6 py-3 font-medium">Teléfono</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if curso.alumnos %} {% for alumno in curso.alumnos %}
+          <tr class="border-b border-default hover:bg-gray-50">
+            <td class="px-6 py-4 font-medium text-emerald-600">
+              #{{ alumno.id }}
+            </td>
+            <td class="px-6 py-4">
+              {{ alumno.nombre }} {{ alumno.apellidos }}
+            </td>
+            <td class="px-6 py-4">{{ alumno.email }}</td>
+            <td class="px-6 py-4">{{ alumno.telefono }}</td>
+          </tr>
+          {% endfor %} {% else %}
+          <tr>
+            <td colspan="4" class="px-6 py-8 text-center text-gray-500 italic">
+              Aún no hay alumnos inscritos en este curso.
+            </td>
+          </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-6">
+      <a
+        href="{{ url_for('inscripciones.listado_inscripciones') }}"
+        class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-gray-200"
+      >
+        Regresar al listado
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

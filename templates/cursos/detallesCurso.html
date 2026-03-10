@@ -1,0 +1,67 @@
+{% extends "layout.html" %} {% block container %}
+
+<section class="bg-neutral-primary py-8">
+  <div class="max-w-2xl mx-auto px-4">
+    <h2 class="mb-6 text-2xl font-bold text-gray-900">Detalles del Curso</h2>
+
+    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <h3 class="text-sm font-medium text-gray-500">ID del Curso</h3>
+          <p class="mt-1 text-lg font-semibold text-gray-900">{{ curso.id }}</p>
+        </div>
+
+        <div>
+          <h3 class="text-sm font-medium text-gray-500">Nombre del Curso</h3>
+          <p class="mt-1 text-lg font-semibold text-gray-900">
+            {{ curso.nombre }}
+          </p>
+        </div>
+
+        <div class="sm:col-span-2">
+          <h3 class="text-sm font-medium text-gray-500">Maestro a Cargo</h3>
+          <p class="mt-1 text-base text-gray-900">
+            {{ curso.maestro.nombre }} {{ curso.maestro.apellidos }}
+            <span class="text-sm text-gray-500"
+              >(Matrícula: {{ curso.maestro_id }})</span
+            >
+          </p>
+        </div>
+
+        <div class="sm:col-span-2">
+          <h3 class="text-sm font-medium text-gray-500">Descripción</h3>
+          <p
+            class="mt-1 text-base text-gray-900 bg-gray-50 p-3 rounded border border-gray-100"
+          >
+            {{ curso.descripcion if curso.descripcion else "Sin descripción
+            asignada." }}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <a
+          href="{{ url_for('cursos.listado_cursos') }}"
+          class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-600 rounded-lg focus:ring-4 focus:ring-blue-200 hover:bg-blue-700"
+        >
+          <svg
+            class="w-4 h-4 mr-2"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18"
+            ></path>
+          </svg>
+          Regresar al listado
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
